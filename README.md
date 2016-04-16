@@ -6,4 +6,4 @@ $ make
 $ ./viewqr [ png filepath ]
 ```
 ###截图：
-![](https://github.com/ljkgpxs/ViewQR/screenshots/screenshot1.png)
+![image](https://github.com/ljkgpxs/ViewQR/raw/master/screenshots/screenshot1.png)

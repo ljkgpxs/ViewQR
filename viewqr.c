@@ -110,16 +110,24 @@ int read_png(char *file_name)
 
 int main(int argc, char **argv)
 {
+	int res;
+	unsigned char **ixy;
 	if(argc <= 1) {
 		printf("Usage: viewqr [ PNG QR file path ]\n");
 		return 0;
 	}
-	int res;
+		// 获取png图片原数据
 	if(!(res = read_png(argv[1]))) {
 		fprintf(stderr, "Read png file failed(%d)\n", res);
 		return 1;
 	}
-	unsigned char ixy[image_y][image_x];
+
+	ixy = (unsigned char **)malloc(sizeof(unsigned char**)*image_y);
+	for(tempi = 0; tempi < image_y; tempi++) {
+		ixy[tempi] = (unsigned char *)malloc(sizeof(unsigned char *)*image_x);
+	}
+
+	// 转换R的原数据为坐标形式
 	for(tempi = 0, x = 0, y = 0; tempi < image_x * image_y; tempi++) {
 		ixy[y][x++] = tabr[tempi];
 		if((tempi + 1) % image_x == 0) { 
@@ -127,6 +135,8 @@ int main(int argc, char **argv)
 			x = 0;
 		}
 	}
+
+	// 打印二维码
 	printf("\n\n    ");
 	for(y = 0; y < image_y/5; y++) {
 		for(x = 0; x < image_x/5; x++)
@@ -137,6 +147,9 @@ int main(int argc, char **argv)
 		printf("\n    ");
 	}
 	printf("\n\n");
+	for(tempi = 0; tempi < image_y; tempi++) {
+		free(ixy[tempi]);
+	}
 	return 0;
 }
 

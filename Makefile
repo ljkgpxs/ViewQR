@@ -1,2 +1,4 @@
+DEBUG = 
 all:
-	gcc main.c -o viewqr -lpng -O3 -Wall
+	echo "**Building tools.viewqr"
+	@gcc viewqr.c -o viewqr -lpng -O3 -Wall $(DEBUG)
